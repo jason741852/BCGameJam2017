@@ -8,7 +8,6 @@ public class ShiftDimension : MonoBehaviour {
 
 	void Start(){
 		current_platform = 0;
-
 	}
 		
 	// Update is called once per frame
@@ -29,11 +28,8 @@ public class ShiftDimension : MonoBehaviour {
 	}
 
 	void PlayShift(bool next){
-	//	logic
 		int shift_to = current_platform;
 		if (next) {
-			// mod length
-			// assign to shift to
 			if (shift_to ==platforms.Length-1) {
 				shift_to = 0;
 			}
@@ -41,8 +37,6 @@ public class ShiftDimension : MonoBehaviour {
 				shift_to++;
 			}
 		} else {
-			// subtract 1, check for less than 0
-			// assign to shift to
 			if (shift_to == 0) {
 				shift_to = platforms.Length - 1;
 			} 
@@ -51,12 +45,24 @@ public class ShiftDimension : MonoBehaviour {
 			}
 
 		}
+
 		Vector3 platform = platforms[current_platform].position;
 		Vector3 player_position_vector = transform.position - platform;
 
 		Vector3 new_player_position_vector = player_position_vector + platforms[shift_to].position;
-		transform.position = new_player_position_vector;
-		current_platform = shift_to;
-		Debug.Log (shift_to);
+
+		// Test to see if the other dimension teleport to location is open
+		Rigidbody rb = GetComponent<Rigidbody>();
+		Vector3 old_to_new_point = new_player_position_vector - transform.position;
+		RaycastHit[] hits = rb.SweepTestAll (old_to_new_point, old_to_new_point.magnitude, QueryTriggerInteraction.Ignore);
+		// If something in way, prevent teleport
+		if(hits[hits.Length-1].collider.bounds.Contains(new_player_position_vector)){
+			Debug.Log("Shouldnt shift dimension, object in the way");
+			return;
+		}else{
+			// Else, teleport
+			transform.position = new_player_position_vector;
+			current_platform = shift_to;
+		}
 	}
 }
