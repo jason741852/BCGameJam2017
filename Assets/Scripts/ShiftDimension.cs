@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ShiftDimension : MonoBehaviour {
 	public Transform[] platforms;
+
+	public ParticleSystem shift_effect;
+
+	private ParticleSystem effect_instance;
 	private int current_platform;
 
 	void Start(){
@@ -63,6 +67,22 @@ public class ShiftDimension : MonoBehaviour {
 			// Else, teleport
 			transform.position = new_player_position_vector;
 			current_platform = shift_to;
+
+			if(shift_to > 0){
+				RenderSettings.fog = true;
+				Fog.countdown = true;
+			}else{
+				RenderSettings.fog = false;
+			}
+
+			if(shift_effect != null){
+				if(effect_instance == null){
+					effect_instance = Instantiate(shift_effect, transform.position + transform.forward, Quaternion.identity) as ParticleSystem;
+				}
+				effect_instance.Play();
+				effect_instance.transform.position = transform.position + transform.forward;
+			}
 		}
+			
 	}
 }
