@@ -60,7 +60,7 @@ public class ShiftDimension : MonoBehaviour {
 		Vector3 old_to_new_point = new_player_position_vector - transform.position;
 		RaycastHit[] hits = rb.SweepTestAll (old_to_new_point, old_to_new_point.magnitude, QueryTriggerInteraction.Ignore);
 		// If something in way, prevent teleport
-		if(hits[hits.Length-1].collider.bounds.Contains(new_player_position_vector)){
+		if(hits.Length > 0 && hits[hits.Length-1].collider.bounds.Contains(new_player_position_vector)){
 			Debug.Log("Shouldnt shift dimension, object in the way");
 			return;
 		}else{
