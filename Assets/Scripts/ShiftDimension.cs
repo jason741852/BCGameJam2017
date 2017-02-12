@@ -7,18 +7,24 @@ public class ShiftDimension : MonoBehaviour {
 
 	public ParticleSystem shift_effect;
 
+	public AudioSource shift_sfx, invalid_teleport, ambience1, ambience2;
+
 	private ParticleSystem effect_instance;
 	private int current_platform;
 
+	public float teleport_delay = 3f;
+	private bool can_teleport = true;
+
 	void Start(){
 		current_platform = 0;
+		ambience1.Play();
 	}
 		
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.LeftShift)) {
+		if (Input.GetKeyDown (KeyCode.LeftShift) && can_teleport) {
 			PlayShiftPrev ();
-		} else if (Input.GetKeyDown (KeyCode.RightShift)) {
+		} else if (Input.GetKeyDown (KeyCode.RightShift) && can_teleport) {
 			PlayShiftNext ();
 		}
 	}
@@ -62,17 +68,22 @@ public class ShiftDimension : MonoBehaviour {
 		// If something in way, prevent teleport
 		if(hits.Length > 0 && hits[hits.Length-1].collider.bounds.Contains(new_player_position_vector)){
 			Debug.Log("Shouldnt shift dimension, object in the way");
+			invalid_teleport.Play();
 			return;
 		}else{
 			// Else, teleport
+			StartCoroutine("TeleportDelay");
+			shift_sfx.Play();
 			transform.position = new_player_position_vector;
 			current_platform = shift_to;
 
 			if(shift_to > 0){
 				RenderSettings.fog = true;
 				Fog.countdown = true;
+				ambience2.Play();
 			}else{
 				RenderSettings.fog = false;
+				ambience2.Stop();
 			}
 
 			if(shift_effect != null){
@@ -84,5 +95,11 @@ public class ShiftDimension : MonoBehaviour {
 			}
 		}
 			
+	}
+
+	IEnumerator TeleportDelay(){
+		can_teleport = false;
+		yield return new WaitForSeconds(teleport_delay);
+		can_teleport = true;
 	}
 }

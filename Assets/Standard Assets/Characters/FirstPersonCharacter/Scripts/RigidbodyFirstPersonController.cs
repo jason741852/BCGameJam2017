@@ -82,6 +82,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public MouseLook mouseLook = new MouseLook();
         public AdvancedSettings advancedSettings = new AdvancedSettings();
 
+        
+        public bool disableMovement = false;
+
 
         private Rigidbody m_RigidBody;
         private CapsuleCollider m_Capsule;
@@ -128,6 +131,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void Update()
         {
+            if(disableMovement){
+                return;
+            }
             RotateView();
 
             if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
@@ -139,6 +145,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void FixedUpdate()
         {
+            if(disableMovement){
+                return;
+            }
             GroundCheck();
             Vector2 input = GetInput();
 
