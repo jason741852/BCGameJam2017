@@ -17,7 +17,7 @@ public class SceneTransition : MonoBehaviour {
 		var wait = .7f;
 		if(transitionSfx != null){
 			transitionSfx.Play();
-			wait = transitionSfx.clip.length;
+			wait = transitionSfx.clip.length - 0.5f;
 		}
 		GameManager.FadeOut();
 
