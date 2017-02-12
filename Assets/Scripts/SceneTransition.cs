@@ -7,9 +7,24 @@ public class SceneTransition : MonoBehaviour {
 
 	public int SceneIndex = -1;
 	public string SceneName;
+
+	public AudioSource transitionSfx;
 	public void TransitionScene(){
-		if(SceneName != null){
-			SceneManager.LoadScene("SceneName");
+		StartCoroutine("TransitionDelay");
+	}
+
+	IEnumerator TransitionDelay(){
+		var wait = .7f;
+		if(transitionSfx != null){
+			transitionSfx.Play();
+			wait = transitionSfx.clip.length;
+		}
+		GameManager.FadeOut();
+
+		yield return new WaitForSeconds(wait);
+		
+		if(SceneName != null && SceneName.Length > 0){
+			SceneManager.LoadScene(SceneName);
 		}
 		else if(SceneIndex >= 0){
 			SceneManager.LoadScene(SceneIndex);

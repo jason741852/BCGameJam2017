@@ -42,7 +42,7 @@ void Update()
         {
             seconds = 0;
             minutes++;
-            if(minutes > 60)
+            if(minutes >= 60)
             {
                 minutes = 0;
                 hour++;
