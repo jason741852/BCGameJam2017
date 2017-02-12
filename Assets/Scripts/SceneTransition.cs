@@ -35,6 +35,6 @@ public class SceneTransition : MonoBehaviour {
 	}
 
 	public static void RestartGame(){
-		SceneManager.LoadScene(0);
+		SceneManager.LoadScene("GameOver");
 	}
 }
