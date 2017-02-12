@@ -76,6 +76,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public bool disableMovement = false;
 
+
+
         public Camera cam;
         public MovementSettings movementSettings = new MovementSettings();
         public MouseLook mouseLook = new MouseLook();
@@ -127,7 +129,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void Update()
         {
-            if(disableMovement){
+            if (disableMovement)
+            {
                 return;
             }
             RotateView();
@@ -141,7 +144,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void FixedUpdate()
         {
-            if(disableMovement){
+            if (disableMovement)
+            {
                 return;
             }
             GroundCheck();
