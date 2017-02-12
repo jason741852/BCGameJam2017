@@ -22,21 +22,31 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		clock = Clock.GetComponentInChildren<Clock>();
-		controller = Player.GetComponent<PlayerContoller>();
+		if(Player != null){
+			controller = Player.GetComponent<PlayerContoller>();
+		}
 
-		int hours = (int)Mathf.Floor(minutesForRound/60);
-		int minutes = minutesForRound%60;
+		if(Clock != null){
+			clock = Clock.GetComponentInChildren<Clock>();
 
-		clock.hour = 11 - hours;
-		clock.minutes = 60 - minutes;
-		clock.seconds = 0;
+			if(clock != null){
+				int hours = (int)Mathf.Floor(minutesForRound/60);
+				int minutes = minutesForRound%60;
+
+				clock.hour = 11 - hours;
+				clock.minutes = 60 - minutes;
+				clock.seconds = 0;
+			}
+		}
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(clock.hour == 12){
-			controller.Die();
+		if(clock != null){
+			if(clock.hour == 12){
+				controller.Die();
+			}
 		}
 	}
 
@@ -52,12 +62,6 @@ public class GameManager : MonoBehaviour {
 		fade = true;
 	}
 
-	IEnumerator FadeTime(){
-		yield return new WaitForSeconds(4f);
-		fade = false;
-	}
-
-	bool inited = false;
 	void OnGUI(){
 		if(fade){
 			alpha -= fadeDir * fadeSpeed * Time.deltaTime;  
