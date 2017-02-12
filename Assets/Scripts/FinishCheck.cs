@@ -2,21 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SceneTransition))]
 public class FinishCheck : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		Debug.Log ("hi");
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+	SceneTransition sceneTransition;
+
+	void Start(){
+		sceneTransition = GetComponent<SceneTransition>();
 	}
 
-	void OnCollisionEnter(Collision other){
-		if(other.gameObject.CompareTag("Finish")){
-			//TODO: action
+	void OnTriggerEnter(Collider other){
+		if(other.gameObject.CompareTag("Player")){
+			sceneTransition.TransitionScene();
 		}
 	}
 }

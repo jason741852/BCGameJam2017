@@ -15,7 +15,7 @@ public class RoundTime : MonoBehaviour {
 		int seconds = 0;
 
 		clock.hour = 11 - hours;
-		clock.minutes = 61 - minutes;
+		clock.minutes = 60 - minutes;
 		clock.seconds = 0;
 	}
 	
