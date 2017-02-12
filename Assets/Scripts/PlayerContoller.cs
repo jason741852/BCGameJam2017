@@ -27,6 +27,12 @@ public class PlayerContoller : MonoBehaviour {
 			GameManager.FadeOut();
 			deathNoise.Play();
 			playerAlive = false;
+			StartCoroutine("Restart");
 		}
+	}
+
+	IEnumerator Restart(){
+		yield return new WaitForSeconds(2f);
+		SceneTransition.RestartGame();
 	}
 }

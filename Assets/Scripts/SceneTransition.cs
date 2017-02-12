@@ -33,4 +33,8 @@ public class SceneTransition : MonoBehaviour {
 			Debug.Log("Error: no scene specified to transition to");
 		}
 	}
+
+	public static void RestartGame(){
+		SceneManager.LoadScene(0);
+	}
 }
