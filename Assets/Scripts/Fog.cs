@@ -23,6 +23,7 @@ public class Fog : MonoBehaviour {
 	void Update(){
 		if(countdown){
 			val += (fogDensityIncreaseRate * Time.deltaTime);
+			RenderSettings.fogColor = Color.red;
 			RenderSettings.fogDensity = .01f * val;
 		}
 	}
