@@ -48,6 +48,10 @@ public class GameManager : MonoBehaviour {
 				controller.Die();
 			}
 		}
+
+		if(Input.GetKeyDown(KeyCode.Escape)){
+			SceneTransition.RestartGame();
+		}
 	}
 
 	public static void FadeIn(){ 
