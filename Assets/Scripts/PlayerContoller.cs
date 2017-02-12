@@ -36,8 +36,6 @@ public class PlayerContoller : MonoBehaviour {
  	private float fadeDir = -1;
 	void OnGUI(){
 		if(!playerAlive){
-
-		Debug.Log("memdmf");
 			alpha -= fadeDir * fadeSpeed * Time.deltaTime;  
 			alpha = Mathf.Clamp01(alpha);   
 			
